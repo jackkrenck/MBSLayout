@@ -1,0 +1,71 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<!-- Author: ghani -->
+ 
+<struts>
+    <constant name="struts.ui.theme" value="epbt2" />
+    <constant name="struts.ui.templateDir" value="template" />
+    <constant name="struts.custom.i18n.resources" value="global"/>
+    <constant name="struts.devMode" value="false"/>
+    <constant name="struts.enable.DynamicMethodInvocation" value="true" />
+    <constant name="struts.action.extension" value="," />
+    
+    <include file="common.xml"/>
+    <include file="image.xml"/>
+    <include file="password.xml"/>
+      
+    <package name="default" extends="struts-default,json-default">
+        
+        <interceptors>
+            <interceptor name="authentication"
+                         class="com.epbt2.interceptors.AuthenticationInterceptor">
+            </interceptor>
+            <interceptor-stack name="authStack">
+                <interceptor-ref name="authentication"></interceptor-ref>
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+            </interceptor-stack>
+        </interceptors>        
+        <default-interceptor-ref name="authStack"></default-interceptor-ref>
+        
+        <global-results>
+            <result name="error">/error.jsp</result>
+            <result name="login" type="redirect">Login</result>
+        </global-results>
+        
+        <action name="*Login" class="com.epbt2.common.LoginAction" method="{1}">
+            <result name="success">/login.jsp</result>
+            <result name="input">/login.jsp</result>
+            <result name="mainPage" type="redirect">mainPage</result>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+        </action>
+        <action name="mainPage" class="com.epbt2.common.UserAction">           
+            <result name="success" type="redirect">common/welcome</result>
+        </action>
+        <action name="logOutUser" class="com.epbt2.common.LogoutAction">
+            <!--interceptor-ref name="defaultStack"></interceptor-ref-->
+            <result name="success">/login.jsp</result>  
+            <result name="login">/login.jsp</result>  
+        </action>               
+        <action name="menu" class="com.epbt2.common.MenuAccordionPreparer">
+            <result name="success">/inc2/sidebar.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action> 
+        <action name="info2" class="com.epbt2.common.InfoAction">
+            <result name="success">/inc2/top.jsp</result>
+        </action>
+        <action name="redirectSys" class="com.epbt2.common.RedirectSystemAction">
+            <result name="redirect" type="redirect">
+                <param name="location">${url}</param>
+            </result>
+        </action>
+            
+        <!-- JSON Time Out -->
+        <action name="TOutJson" class="com.epbt2.common.TimeoutJsonAction">
+            <result type="json"/>
+        </action>
+        <!-- JSON Time Out --> 
+        
+    </package>
+</struts>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+ 
+<struts>
+ 
+    <package name="image" namespace="/Image" extends="struts-default"> 
+        <result-types>
+            <result-type name="imageLogoResult" class="com.epbt2.image.LogoImageBytesResult"/>
+            <result-type name="stafLogoResult" class="com.epbt2.image.StafImageBytesResult"/>
+        </result-types>
+        
+        <!-- LOGO --> 
+        <action name="logoImage" class="com.epbt2.image.ImgFimageAction">
+            <result name="success" type="imageLogoResult"></result>
+        </action>
+        <!-- LOGO --> 
+        <!-- STAF --> 
+        <action name="stafImage" class="com.epbt2.image.ImgPnfotoAction">
+            <result name="success" type="stafLogoResult"></result>
+        </action>
+        <!-- STAF --> 
+ 
+    </package>
+ 
+</struts>
+ 
