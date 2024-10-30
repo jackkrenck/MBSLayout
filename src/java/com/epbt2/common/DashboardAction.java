@@ -75,4 +75,5 @@ public class DashboardAction extends ActionSupport implements UserAware, ModelDr
         return this.userModel;
     }
     /* USER */
+    //this comment is for the purpose of testing gitHub
 }
